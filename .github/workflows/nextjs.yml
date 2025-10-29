@@ -75,6 +75,10 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
+        env:
+          GH_API_KEY: ${{ secrets.GH_API_KEY }}
+          GH_USERNAME: ${{ secrets.GH_USERNAME }}
+          GH_REPO_NAME: ${{ secrets.GH_REPO_NAME }}
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
