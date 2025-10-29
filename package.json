@@ -9,12 +9,17 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.919.0",
     "dotenv": "^17.2.3",
     "next": "16.0.0",
     "octokit": "^5.0.4",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "rehype-stringify": "^10.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
     "stream": "^0.0.3",
+    "unified": "^11.0.5",
     "unzipper": "^0.12.3"
   },
   "devDependencies": {

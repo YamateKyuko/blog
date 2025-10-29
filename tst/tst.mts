@@ -4,8 +4,15 @@ import dotenv from "dotenv";
 import unzipper from "unzipper";
 import fs from "fs";
 import path from "path";
+import { unified } from "unified";
+import markdown from "remark-parse";
+import remark2rehype from "remark-rehype";
+import html from "rehype-stringify";
+
 
 dotenv.config({ path: `${process.cwd()}/../.env.development`, quiet: true });
+
+
 
 async function main() {
   try {
@@ -37,6 +44,20 @@ async function main() {
     const res = await scanFile(articlesDir, "md");
     console.log("res:", res);
 
+    Promise.all(res.map(async (filepath) => {
+      const d = await fs.promises.readFile(`${articlesDir}/${filepath}`, 'utf-8')
+      const processor = unified()
+        .use(markdown)
+        .use(remark2rehype)
+        .use(html);
+      const h = await processor.process(d);
+      console.log(h.toString());
+    }));
+
+    
+
+    
+
   } catch (err) {
     console.log("err:", err);
   }
@@ -45,7 +66,6 @@ async function main() {
 async function scanFile(dirpath: string, fileExt: 'md'): Promise<string[]> {
   const paths: string[] = [];
   const scanner = async (dir: string) => {
-    // const paths: string[] = [];
     const contents = await fs.promises.readdir(`${dirpath}/${dir}`, { withFileTypes: true });
     const r = contents.map(async (item): Promise<void> => {
       if (item.isDirectory()) {
@@ -61,12 +81,8 @@ async function scanFile(dirpath: string, fileExt: 'md'): Promise<string[]> {
     });
     await Promise.all(r);
   }
-
   await scanner('');
-  
-
   return paths;
-
 }
 
 
