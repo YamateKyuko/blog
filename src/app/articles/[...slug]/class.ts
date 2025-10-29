@@ -34,10 +34,18 @@ export class Articles {
 
   private static async loadZip(dest: string) {
     try {
-      const octokit = new Octokit({ auth: process.env.GITHUB_API_KEY });
+      const {
+        GH_API_KEY: apikey,
+        GH_USERNAME: username,
+        GH_REPO_NAME: reponame
+      } = process.env;
+
+      if (!apikey || !username || !reponame) {throw new Error('Missing Secrets');}
+      
+      const octokit = new Octokit({ auth: apikey });
       const resp = await octokit.request("GET /repos/{owner}/{repo}/zipball/{ref}/", {
-        owner: process.env.GITHUB_USERNAME,
-        repo: process.env.GITHUB_REPO_NAME,
+        owner: username,
+        repo: reponame,
         ref: "main",
         request: { responseType: "stream" }
       });
