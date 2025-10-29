@@ -9,10 +9,15 @@ const articles = await Articles.get(dest);
 
 export async function generateStaticParams() {
   const articlepaths = articles.contents.keys();
-  const slugs = articlepaths.map((path) => {
+  const slugs: {slug: string[]}[] = [];
+  for (const path of articlepaths) {
     console.log("path:", path);
-    return {slug: path.split('/')};
-  })
+    slugs.push({slug: path.split('/')});
+  }
+  // const slugs = articlepaths.map((path) => {
+  //   console.log("path:", path);
+  //   return {slug: path.split('/')};
+  // })
   return [...slugs];
 }
 
