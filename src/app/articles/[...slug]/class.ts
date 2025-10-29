@@ -65,35 +65,38 @@ export class Articles {
   private static async getArticlesDirName(dest: string) {
     const tmpcontents = await fs.promises.readdir(dest);
     const headerFilename = tmpcontents[0];
-
     return headerFilename;
   }
 
   private static async getArticles(dest: string, articlesDirName: string, fileExt: string) {
     // const paths: string[] = [];
-    const articles: Map<string, Article> = new Map();
-    const scanner = async (currdir: string[]) => {
-      const dire = `${dest}/${articlesDirName}/blog/articles/${currdir.join('/')}`;
-      const contents = await fs.promises.readdir(dire, { withFileTypes: true });
-      await Promise.all(contents.map(async (item): Promise<void> => {
-        if (item.isDirectory()) {
-          await scanner([...currdir, item.name]);
-        }
-        else if (
-          item.isFile() &&
-          item.name.endsWith(`.${fileExt}`)
-        ) {
-          // paths.push([...dir, item.name].join('/'));
-          const filepath = [...currdir, item.name].join('/');
-          const article = await Article.get(dire, item.name, 'md');
-          articles.set(filepath, article);
-        };
-      }));
-    }
-    await scanner([]);
+    try {
+      const articles: Map<string, Article> = new Map();
+      const scanner = async (currdir: string[]) => {
+        const dire = `${dest}/${articlesDirName}/blog/articles/${currdir.join('/')}`;
+        const contents = await fs.promises.readdir(dire, { withFileTypes: true });
+        await Promise.all(contents.map(async (item): Promise<void> => {
+          if (item.isDirectory()) {
+            await scanner([...currdir, item.name]);
+          }
+          else if (
+            item.isFile() &&
+            item.name.endsWith(`.${fileExt}`)
+          ) {
+            // paths.push([...dir, item.name].join('/'));
+            const filepath = [...currdir, item.name].join('/');
+            const article = await Article.get(dire, item.name, 'md');
+            articles.set(filepath, article);
+          };
+        }));
+      }
+      await scanner([]);
 
-    // return paths;
-    return articles;
+      return articles;
+    } catch (err) {
+      console.log("err:", err);
+      return new Map();
+    }
   }
 };
 

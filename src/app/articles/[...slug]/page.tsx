@@ -17,7 +17,6 @@ export async function generateStaticParams() {
 }
 
 export default async function Page(props: PageProps<'/articles/[...slug]'>) {
-  console.log("props:", props);
   const { slug } = await props.params;
   const article = articles.contents.get(slug.join('/'));
   if (!article) {
