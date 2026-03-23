@@ -25,7 +25,12 @@ export default async function Page(props: PageProps<'/articles/[...slug]'>) {
   const { slug } = await props.params;
   const article = articles.contents.get(slug.join('/'));
   if (!article) {
-    throw new Error('Article not found');
+    console.log(`Article "${slug.join('/')}" not found;`)
+    return (
+      <main>
+        Sorry, but article "{slug.join('/')}" not found;`
+      </main>
+    )
   }
   const html = await article.getHTML();
   return (
@@ -33,4 +38,4 @@ export default async function Page(props: PageProps<'/articles/[...slug]'>) {
       <article dangerouslySetInnerHTML={{ __html: html }} />
     </main>
   )
-}
+};
