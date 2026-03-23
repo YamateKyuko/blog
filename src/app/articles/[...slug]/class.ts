@@ -53,7 +53,7 @@ export class Articles {
       await fs.promises.rm(dest, { recursive: true, force: true });
       await fs.promises.mkdir(dest, { recursive: true });
 
-      const data = resp.data as ArrayBuffer;
+      const data = await resp.data as ArrayBuffer;
       const buffer = Buffer.from(data);
       const directory = await unzipper.Open.buffer(buffer);
       await directory.extract({ path: dest });
@@ -83,6 +83,7 @@ export class Articles {
             item.isFile() &&
             item.name.endsWith(`.${fileExt}`)
           ) {
+            if (item.name.startsWith(`_`)) return;
             // paths.push([...dir, item.name].join('/'));
             const filepath = [...currdir, item.name].join('/');
             const article = await Article.get(dire, item.name, 'md');

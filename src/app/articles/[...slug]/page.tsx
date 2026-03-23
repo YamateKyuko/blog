@@ -34,8 +34,13 @@ export default async function Page(props: PageProps<'/articles/[...slug]'>) {
     )
   }
   const html = await article.getHTML();
+  const path = slug[slug.length - 1]
+  
   return (
     <main>
+      <h1>
+        {path}
+      </h1>
       <article dangerouslySetInnerHTML={{ __html: html }} />
     </main>
   )
