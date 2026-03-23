@@ -1,6 +1,0 @@
-# cinnamon blog system (developping)
-
-zennのようにgithub連携したブログを目指す。
-vscode内で左のサイドバーから気づいたことをパッと書けるようにしたい。
-最終的な公開も視野に入れたい。
-公開の際にはgithubのアカウント必須で皆さんのgithub.ioからホスティングしてもらいたい。

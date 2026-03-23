@@ -25,10 +25,11 @@ export default async function Page(props: PageProps<'/articles/[...slug]'>) {
   const { slug } = await props.params;
   const article = articles.contents.get(slug.join('/'));
   if (!article) {
-    console.log(`Article "${slug.join('/')}" not found;`)
+    console.log(`Article "${slug.join('/')}" not found;`);
     return (
       <main>
-        Sorry, but article "{slug.join('/')}" not found;`
+        Sorry, but article "{slug.join('/')}" not found;
+        {articles.contents.keys().map((v) => <>`${v}`<br /></>)}
       </main>
     )
   }
