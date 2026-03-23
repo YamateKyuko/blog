@@ -37,7 +37,7 @@ export class Articles {
       const {
         GH_API_KEY: apikey,
         GH_USERNAME: username,
-        GH_REPO_NAME: reponame
+        GH_REPONAME: reponame,
       } = process.env;
 
       if (!apikey || !username || !reponame) {throw new Error('Missing Secrets');}
