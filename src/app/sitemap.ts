@@ -4,7 +4,7 @@ import { MetadataRoute } from 'next'
 import { generateStaticParams } from './articles/[...slug]/page';
 
 // const baseurl = 'https://yamatekyuko.github.io/blog/articles/'; // 要修正
-const baseurl = process.env.GH_BASEURL
+const baseurl = process.env.GH_BASEURL || ''
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
@@ -21,7 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return slugs.map((v): MetadataRoute.Sitemap[number] => {
     return {
-      url: `${baseurl}${v.slug.join('/')}`,
+      url: `${baseurl}articles/${v.slug.join('/')}`,
       lastModified: date,
       changeFrequency: 'never',
     }
