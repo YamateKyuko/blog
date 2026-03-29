@@ -36,7 +36,6 @@ export default async function Page(props: PageProps<'/articles/[...slug]'>) {
   }
   const html = await article.getHTML();
   const path = slug[slug.length - 1]
-  console.log(slug)
   
   return (
     <main>

@@ -22,8 +22,8 @@ export default function RootLayout({
       <body>
         <header className={styles.header}>
           <a href={baseurl}></a>
-          <img className="light" src="/YamakyuLog.svg" alt="Yamakyu.Log" />
-          <img className="dark" src="/YamakyuLogDark.svg" alt="Yamakyu.Log" />
+          <img className="light" src={`${baseurl}YamakyuLog.svg`} alt="Yamakyu.Log" />
+          <img className="dark" src={`${baseurl}YamakyuLogDark.svg`} alt="Yamakyu.Log" />
         </header>
         {children}
         <footer>(c) Yamakyu All Rights Reserved.</footer>
