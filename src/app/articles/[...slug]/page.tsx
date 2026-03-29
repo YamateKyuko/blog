@@ -4,6 +4,7 @@ export const dynamicParams = false;
 import { Articles } from "./class";
 
 const dest = `${process.cwd()}/tmp`;
+const baseurl = process.env.GH_BASEURL;
 
 const articles = await Articles.get(dest);
 
@@ -35,9 +36,18 @@ export default async function Page(props: PageProps<'/articles/[...slug]'>) {
   }
   const html = await article.getHTML();
   const path = slug[slug.length - 1]
+  console.log(slug)
   
   return (
     <main>
+      <nav className="kuzu">
+        <a href={`${baseurl}`}>top</a>
+        <a href={`${baseurl}articles/`}>articles</a>
+        {slug.map((v, i) => {
+          return <a key={i} href={`${`${baseurl}articles/${slug.slice(0, i+1).join('/')}`}`}>{v}</a>
+        })}
+      </nav>
+      
       <h1>
         {path}
       </h1>

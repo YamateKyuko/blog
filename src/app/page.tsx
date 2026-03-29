@@ -5,8 +5,9 @@ export default function Home() {
   return (
     <main>
       <h2>
-        Yamakyu.Log
+        Weblog by Yamakyu
       </h2>
+      <a href="yamatekyuko.github.io" >Website</a>
     </main>
   );
 }
